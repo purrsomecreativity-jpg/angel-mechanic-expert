@@ -1,20 +1,44 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const atypDisplay = localFont({
+  src: [
+    { path: "../fonts/AtypDisplay-Light.otf", weight: "300", style: "normal" },
+    { path: "../fonts/AtypDisplay-Regular.otf", weight: "400", style: "normal" },
+    { path: "../fonts/AtypDisplay-Medium.otf", weight: "500", style: "normal" },
+    { path: "../fonts/AtypDisplay-Semibold.otf", weight: "600", style: "normal" },
+    { path: "../fonts/AtypDisplay-Bold.otf", weight: "700", style: "normal" },
+  ],
+  variable: "--font-atyp-display",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const atypText = localFont({
+  src: [
+    { path: "../fonts/AtypText-Light.otf", weight: "300", style: "normal" },
+    { path: "../fonts/AtypText-Regular.otf", weight: "400", style: "normal" },
+    { path: "../fonts/AtypText-Medium.otf", weight: "500", style: "normal" },
+    { path: "../fonts/AtypText-Semibold.otf", weight: "600", style: "normal" },
+    { path: "../fonts/AtypText-Bold.otf", weight: "700", style: "normal" },
+  ],
+  variable: "--font-atyp-text",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Website Clone",
-  description: "Pixel-perfect website clone",
+  title: "Angel Mechanic Expert | Expert Auto Repair & Maintenance",
+  description:
+    "Professional auto repair and maintenance services. Certified mechanics, honest pricing, and quality work you can trust. Schedule your appointment today.",
+  keywords: [
+    "auto repair",
+    "mechanic",
+    "car maintenance",
+    "oil change",
+    "brake repair",
+    "engine diagnostics",
+    "Angel Mechanic Expert",
+  ],
 };
 
 export default function RootLayout({
@@ -24,8 +48,8 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="es"
+      className={`${atypDisplay.variable} ${atypText.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
