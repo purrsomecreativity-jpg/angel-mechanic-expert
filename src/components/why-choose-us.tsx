@@ -81,13 +81,7 @@ export function WhyChooseUs() {
           <p className="mb-8 text-center text-sm font-medium uppercase tracking-widest text-white/40">
             {t.whyUs.brands[locale]}
           </p>
-          <LogoCarousel
-            logos={carBrandLogos}
-            autoPlay
-            autoPlayInterval={1500}
-            itemsPerViewMobile={3}
-            itemsPerViewDesktop={6}
-          />
+          <LogoCarousel logos={carBrandLogos} />
         </div>
       </div>
     </section>
