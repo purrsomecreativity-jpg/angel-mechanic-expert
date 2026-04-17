@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { useLanguage } from "@/lib/i18n";
 
 export function CtaSection() {
+  const { locale, t } = useLanguage();
+
   return (
     <section id="contact" className="relative bg-muted/50 py-20 lg:py-28 overflow-hidden">
       {/* Decorative watermark logo */}
@@ -23,7 +26,7 @@ export function CtaSection() {
           <span className="font-mono text-sm font-semibold text-brand">05</span>
           <span className="h-px w-12 bg-brand/40" />
           <span className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
-            Contacto
+            {t.contact.label[locale]}
           </span>
         </div>
 
@@ -33,17 +36,16 @@ export function CtaSection() {
             <Image
               src="/images/logos/ame-full-orange.png"
               alt="Angel Mechanic Expert LLC"
-              width={180}
-              height={72}
-              className="mb-6 h-14 w-auto"
+              width={280}
+              height={112}
+              className="mb-6 h-24 w-auto"
             />
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              ¿Listo Para Agendar{" "}
-              <span className="text-brand">Tu Cita?</span>
+              {t.contact.heading1[locale]}{" "}
+              <span className="text-brand">{t.contact.heading2[locale]}</span>
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Contáctanos hoy y obtén un diagnóstico gratuito. Estamos aquí para
-              ayudarte con cualquier problema de tu vehículo.
+              {t.contact.subtitle[locale]}
             </p>
 
             {/* Contact info cards */}
@@ -57,7 +59,7 @@ export function CtaSection() {
                 </div>
                 <div>
                   <div className="text-sm font-semibold text-foreground">
-                    Dirección
+                    {t.contact.address[locale]}
                   </div>
                   <div className="mt-1 text-sm text-muted-foreground">
                     3311 W Washington St
@@ -75,7 +77,7 @@ export function CtaSection() {
                 </div>
                 <div>
                   <div className="text-sm font-semibold text-foreground">
-                    Teléfono
+                    {t.contact.phone[locale]}
                   </div>
                   <div className="mt-1 text-sm text-muted-foreground">
                     <a
@@ -96,12 +98,12 @@ export function CtaSection() {
                 </div>
                 <div>
                   <div className="text-sm font-semibold text-foreground">
-                    Horario
+                    {t.contact.schedule[locale]}
                   </div>
                   <div className="mt-1 text-sm text-muted-foreground">
-                    Lunes a Viernes: 8:00 AM - 6:00 PM
+                    {t.contact.scheduleWeekday[locale]}
                     <br />
-                    Sábado: 8:00 AM - 2:00 PM
+                    {t.contact.scheduleSaturday[locale]}
                   </div>
                 </div>
               </div>
@@ -111,10 +113,10 @@ export function CtaSection() {
           {/* Right: Contact Form */}
           <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
             <h3 className="text-lg font-bold text-foreground">
-              Envíanos un Mensaje
+              {t.contact.formTitle[locale]}
             </h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Completa el formulario y te contactaremos a la brevedad.
+              {t.contact.formSubtitle[locale]}
             </p>
 
             <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
@@ -124,12 +126,12 @@ export function CtaSection() {
                     htmlFor="name"
                     className="mb-1.5 block text-sm font-medium text-foreground"
                   >
-                    Nombre
+                    {t.contact.name[locale]}
                   </label>
                   <input
                     type="text"
                     id="name"
-                    placeholder="Tu nombre"
+                    placeholder={t.contact.namePlaceholder[locale]}
                     className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
                   />
                 </div>
@@ -138,12 +140,12 @@ export function CtaSection() {
                     htmlFor="phone"
                     className="mb-1.5 block text-sm font-medium text-foreground"
                   >
-                    Teléfono
+                    {t.contact.phone[locale]}
                   </label>
                   <input
                     type="tel"
                     id="phone"
-                    placeholder="(55) 1234-5678"
+                    placeholder={t.contact.phonePlaceholder[locale]}
                     className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
                   />
                 </div>
@@ -154,7 +156,7 @@ export function CtaSection() {
                   htmlFor="email"
                   className="mb-1.5 block text-sm font-medium text-foreground"
                 >
-                  Email
+                  {t.contact.email[locale]}
                 </label>
                 <input
                   type="email"
@@ -169,7 +171,7 @@ export function CtaSection() {
                   htmlFor="service"
                   className="mb-1.5 block text-sm font-medium text-foreground"
                 >
-                  Servicio Requerido
+                  {t.contact.serviceRequired[locale]}
                 </label>
                 <select
                   id="service"
@@ -177,15 +179,12 @@ export function CtaSection() {
                   defaultValue=""
                 >
                   <option value="" disabled>
-                    Selecciona un servicio
+                    {t.contact.selectService[locale]}
                   </option>
-                  <option>Diagnóstico Computarizado</option>
-                  <option>Frenos y Suspensión</option>
-                  <option>Cambio de Aceite</option>
-                  <option>Motor y Transmisión</option>
-                  <option>Sistema Eléctrico</option>
-                  <option>Aire Acondicionado</option>
-                  <option>Otro</option>
+                  {t.services.items.map((service) => (
+                    <option key={service.title.en}>{service.title[locale]}</option>
+                  ))}
+                  <option>{t.contact.other[locale]}</option>
                 </select>
               </div>
 
@@ -194,12 +193,12 @@ export function CtaSection() {
                   htmlFor="message"
                   className="mb-1.5 block text-sm font-medium text-foreground"
                 >
-                  Mensaje
+                  {t.contact.message[locale]}
                 </label>
                 <textarea
                   id="message"
                   rows={4}
-                  placeholder="Describe el problema o servicio que necesitas..."
+                  placeholder={t.contact.messagePlaceholder[locale]}
                   className="w-full resize-none rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
                 />
               </div>
@@ -208,7 +207,7 @@ export function CtaSection() {
                 type="submit"
                 className="w-full rounded-lg bg-brand px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand/25 transition-all hover:bg-brand-dark hover:shadow-brand/40"
               >
-                Enviar Mensaje
+                {t.contact.submit[locale]}
               </button>
             </form>
           </div>

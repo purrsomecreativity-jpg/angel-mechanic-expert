@@ -1,6 +1,11 @@
+"use client";
+
 import Image from "next/image";
+import { useLanguage } from "@/lib/i18n";
 
 export function Hero() {
+  const { locale, t } = useLanguage();
+
   return (
     <section
       id="hero"
@@ -38,14 +43,12 @@ export function Hero() {
 
             {/* Headline */}
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
-              Tu Auto en las
-              <span className="block text-brand">Mejores Manos</span>
+              {t.hero.headline1[locale]}
+              <span className="block text-brand">{t.hero.headline2[locale]}</span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg text-white/60 sm:text-xl lg:mx-0">
-              Servicio automotriz profesional con los mejores estándares de
-              calidad. Diagnóstico preciso, reparación experta y precios
-              honestos.
+              {t.hero.subtitle[locale]}
             </p>
 
             {/* CTAs */}
@@ -67,13 +70,13 @@ export function Hero() {
                     d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
                   />
                 </svg>
-                Agendar Cita
+                {t.hero.cta1[locale]}
               </a>
               <a
                 href="#services"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/5 px-8 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 sm:w-auto"
               >
-                Ver Servicios
+                {t.hero.cta2[locale]}
                 <svg
                   className="size-4"
                   fill="none"
@@ -91,14 +94,14 @@ export function Hero() {
             </div>
 
             {/* Trust indicators */}
-            <div className="mt-16 grid grid-cols-2 gap-8 sm:grid-cols-4">
+            <div className="mt-16 pb-16 grid grid-cols-2 gap-8 sm:grid-cols-4">
               {[
-                { value: "30+", label: "Años de Experiencia" },
-                { value: "12K+", label: "Vehículos Atendidos" },
-                { value: "100%", label: "Garantía en Servicio" },
-                { value: "4.9", label: "Estrellas Google" },
+                { value: "36+", label: t.hero.stats.experience[locale] },
+                { value: "15K+", label: t.hero.stats.vehicles[locale] },
+                { value: "100%", label: t.hero.stats.warranty[locale] },
+                { value: "4.9", label: t.hero.stats.stars[locale] },
               ].map((stat) => (
-                <div key={stat.label} className="text-center lg:text-left">
+                <div key={stat.value} className="text-center lg:text-left">
                   <div className="text-3xl font-bold text-brand sm:text-4xl">
                     {stat.value}
                   </div>
@@ -115,8 +118,8 @@ export function Hero() {
             {/* Glow behind Angel */}
             <div className="absolute bottom-0 left-1/2 h-[80%] w-[80%] -translate-x-1/2 rounded-full bg-black/60 blur-[100px]" />
             <Image
-              src="/images/angel.png"
-              alt="Angel — Dueño de Angel Mechanic Expert"
+              src="/images/angel-hero-transparent.png"
+              alt="Angel — Owner of Angel Mechanic Expert"
               width={520}
               height={680}
               className="relative z-10 h-auto max-h-[75vh] w-auto drop-shadow-[0_0_40px_rgba(232,81,2,0.15)] mb-[-1px]"
@@ -126,12 +129,6 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <div className="flex h-8 w-5 items-start justify-center rounded-full border-2 border-white/20 p-1">
-          <div className="h-2 w-1 animate-bounce rounded-full bg-white/40" />
-        </div>
-      </div>
     </section>
   );
 }

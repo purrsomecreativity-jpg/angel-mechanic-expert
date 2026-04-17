@@ -1,23 +1,11 @@
-const footerLinks = {
-  services: [
-    "Diagnóstico Computarizado",
-    "Frenos y Suspensión",
-    "Cambio de Aceite",
-    "Motor y Transmisión",
-    "Sistema Eléctrico",
-    "Aire Acondicionado",
-  ],
-  company: [
-    { label: "Sobre Nosotros", href: "#about" },
-    { label: "Nuestros Servicios", href: "#services" },
-    { label: "Testimonios", href: "#testimonials" },
-    { label: "Contacto", href: "#contact" },
-  ],
-};
+"use client";
 
 import Image from "next/image";
+import { useLanguage } from "@/lib/i18n";
 
 export function Footer() {
+  const { locale, t } = useLanguage();
+
   return (
     <footer className="bg-surface-dark">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -33,8 +21,7 @@ export function Footer() {
               className="h-16 w-auto"
             />
             <p className="mt-4 text-sm leading-relaxed text-white/50">
-              Taller automotriz profesional con más de 30 años de experiencia.
-              Tu confianza, nuestra prioridad.
+              {t.footer.description[locale]}
             </p>
 
             {/* Social Icons */}
@@ -72,16 +59,16 @@ export function Footer() {
           {/* Services */}
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
-              Servicios
+              {t.footer.servicesTitle[locale]}
             </h4>
             <ul className="mt-4 space-y-3">
-              {footerLinks.services.map((service) => (
-                <li key={service}>
+              {t.services.items.map((service) => (
+                <li key={service.title.en}>
                   <a
                     href="#services"
                     className="text-sm text-white/50 transition-colors hover:text-white"
                   >
-                    {service}
+                    {service.title[locale]}
                   </a>
                 </li>
               ))}
@@ -91,16 +78,16 @@ export function Footer() {
           {/* Company */}
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
-              Empresa
+              {t.footer.companyTitle[locale]}
             </h4>
             <ul className="mt-4 space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.label}>
+              {t.footer.companyLinks.map((link) => (
+                <li key={link.href}>
                   <a
                     href={link.href}
                     className="text-sm text-white/50 transition-colors hover:text-white"
                   >
-                    {link.label}
+                    {link.label[locale]}
                   </a>
                 </li>
               ))}
@@ -110,7 +97,7 @@ export function Footer() {
           {/* Contact */}
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
-              Contacto
+              {t.footer.contactTitle[locale]}
             </h4>
             <ul className="mt-4 space-y-3">
               <li className="text-sm text-white/50">
@@ -141,20 +128,20 @@ export function Footer() {
         {/* Bottom Footer */}
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-6 sm:flex-row">
           <p className="text-xs text-white/40">
-            &copy; {new Date().getFullYear()} Angel Mechanic Expert LLC. Todos los derechos reservados.
+            &copy; {new Date().getFullYear()} Angel Mechanic Expert LLC. {t.footer.copyright[locale]}
           </p>
           <div className="flex gap-6">
             <a
               href="#"
               className="text-xs text-white/40 transition-colors hover:text-white/60"
             >
-              Política de Privacidad
+              {t.footer.privacy[locale]}
             </a>
             <a
               href="#"
               className="text-xs text-white/40 transition-colors hover:text-white/60"
             >
-              Términos de Servicio
+              {t.footer.terms[locale]}
             </a>
           </div>
         </div>

@@ -1,10 +1,16 @@
+"use client";
+
+import { useLanguage } from "@/lib/i18n";
+
 export function WhatsAppButton() {
+  const { locale, t } = useLanguage();
+
   return (
     <a
       href="https://wa.me/14074509997"
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Contáctanos por WhatsApp"
+      aria-label={t.whatsapp.aria[locale]}
       className="fixed bottom-6 right-6 z-50 flex size-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/25 transition-transform hover:scale-110 active:scale-95"
     >
       <svg className="size-7" fill="currentColor" viewBox="0 0 24 24">
