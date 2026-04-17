@@ -86,8 +86,8 @@ export function About() {
           </div>
 
           {/* Right: Photo + Stats Cards */}
-          <div className="mt-14">
-            <div className="flex justify-center mb-2 -mt-24">
+          <div className="relative mt-10">
+            <div className="flex justify-center mb-2 -mt-24 relative z-0">
               <Image
                 src="/images/luis-papa-photo.png"
                 alt="Angel & Luis — Angel Mechanic Expert"
@@ -100,7 +100,7 @@ export function About() {
                 }}
               />
             </div>
-            <div className="grid grid-cols-2 gap-4 -mt-16">
+            <div className="relative z-10 grid grid-cols-2 gap-4 -mt-10">
             {t.about.statsCards.map((stat, i) => (
               <div
                 key={stat.value}
