@@ -28,7 +28,7 @@ export function Services() {
   const { locale, t } = useLanguage();
 
   return (
-    <section id="services" className="bg-muted/50 py-20 lg:py-28">
+    <section id="services" className="bg-muted/50 py-16 sm:py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Label */}
         <div className="mb-4 flex items-center gap-3">
@@ -40,7 +40,7 @@ export function Services() {
         </div>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <h2 className="max-w-xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <h2 className="max-w-xl text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl">
             {t.services.heading1[locale]}{" "}
             <span className="text-brand">{t.services.heading2[locale]}</span>
           </h2>
@@ -55,6 +55,7 @@ export function Services() {
               viewBox="0 0 24 24"
               stroke="currentColor"
               strokeWidth={2}
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -66,11 +67,11 @@ export function Services() {
         </div>
 
         {/* Services Grid */}
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:mt-12 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {t.services.items.map((service, i) => (
             <div
               key={service.title.en}
-              className="group relative rounded-2xl border border-border bg-card p-8 transition-all hover:border-brand/30 hover:shadow-xl hover:shadow-brand/5"
+              className="group relative rounded-2xl border border-border bg-card p-6 transition-all hover:border-brand/30 hover:shadow-xl hover:shadow-brand/5 sm:p-8"
             >
               <div className="mb-5 inline-flex rounded-xl bg-brand/10 p-3 text-brand transition-colors group-hover:bg-brand group-hover:text-white">
                 {serviceIcons[i]}
@@ -93,6 +94,7 @@ export function Services() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     strokeWidth={2}
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"

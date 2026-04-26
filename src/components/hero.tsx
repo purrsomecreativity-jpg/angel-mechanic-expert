@@ -11,21 +11,26 @@ export function Hero() {
       id="hero"
       className="relative flex overflow-hidden bg-surface-dark pt-16 md:pt-20"
     >
-      {/* Background image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat -scale-x-100"
-        style={{ backgroundImage: "url(/images/hero-bg.webp)" }}
+      {/* Background image — next/Image so it serves AVIF/WebP responsively */}
+      <Image
+        src="/images/hero-bg.webp"
+        alt=""
+        aria-hidden="true"
+        fill
+        priority
+        sizes="100vw"
+        className="absolute inset-0 -scale-x-100 object-cover object-center"
       />
       {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-black/60 sm:bg-black/50" />
 
       <div className="relative mx-auto max-w-7xl px-4 pb-0 sm:px-6 lg:px-8">
-        <div className="grid items-end gap-12 lg:grid-cols-2 lg:gap-8">
+        <div className="grid items-end gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-8">
           {/* Left: Text content */}
           <div className="text-center lg:text-left">
             {/* Logo with Inferno Gradient */}
             <div
-              className="mt-6 mb-2 inline-block w-[180px] sm:w-[230px] md:w-[280px] lg:w-[320px] aspect-[1456/816]"
+              className="mt-6 mb-2 inline-block w-[160px] sm:w-[230px] md:w-[280px] lg:w-[320px] aspect-[1456/816]"
               role="img"
               aria-label="Angel Mechanic Expert LLC"
               style={{
@@ -33,29 +38,29 @@ export function Hero() {
                 maskImage: "url(/images/logos/ame-full-white-tight.png)",
                 maskSize: "contain",
                 maskRepeat: "no-repeat",
-                maskPosition: "left center",
+                maskPosition: "center",
                 WebkitMaskImage: "url(/images/logos/ame-full-white-tight.png)",
                 WebkitMaskSize: "contain",
                 WebkitMaskRepeat: "no-repeat",
-                WebkitMaskPosition: "left center",
+                WebkitMaskPosition: "center",
               }}
             />
 
             {/* Headline */}
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="text-3xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
               {t.hero.headline1[locale]}
               <span className="block text-brand">{t.hero.headline2[locale]}</span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-white/60 sm:text-xl lg:mx-0">
+            <p className="mx-auto mt-4 max-w-2xl text-base text-white/70 sm:mt-6 sm:text-xl lg:mx-0">
               {t.hero.subtitle[locale]}
             </p>
 
             {/* CTAs */}
-            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
+            <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center sm:justify-center sm:gap-4 lg:justify-start">
               <a
                 href="#contact"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand/25 transition-all hover:bg-brand-dark hover:shadow-brand/40 sm:w-auto"
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-brand px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand/25 transition-all hover:bg-brand-dark hover:shadow-brand/40 sm:w-auto sm:px-8"
               >
                 <svg
                   className="size-5"
@@ -63,6 +68,7 @@ export function Hero() {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                   strokeWidth={2}
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -74,7 +80,7 @@ export function Hero() {
               </a>
               <a
                 href="#services"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/5 px-8 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 sm:w-auto"
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/5 px-6 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 sm:w-auto sm:px-8"
               >
                 {t.hero.cta2[locale]}
                 <svg
@@ -83,6 +89,7 @@ export function Hero() {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                   strokeWidth={2}
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -94,7 +101,7 @@ export function Hero() {
             </div>
 
             {/* Trust indicators */}
-            <div className="mt-16 pb-16 grid grid-cols-2 gap-8 sm:grid-cols-4">
+            <div className="mt-10 grid grid-cols-2 gap-6 pb-10 sm:mt-16 sm:gap-8 sm:pb-16 sm:grid-cols-4">
               {[
                 { value: "36+", label: t.hero.stats.experience[locale] },
                 { value: "15K+", label: t.hero.stats.vehicles[locale] },
@@ -102,10 +109,10 @@ export function Hero() {
                 { value: "4.9", label: t.hero.stats.stars[locale] },
               ].map((stat) => (
                 <div key={stat.value} className="text-center lg:text-left">
-                  <div className="text-3xl font-bold text-brand sm:text-4xl">
+                  <div className="text-2xl font-bold text-brand sm:text-4xl">
                     {stat.value}
                   </div>
-                  <div className="mt-1 text-sm text-white/50">
+                  <div className="mt-1 text-xs text-white/60 sm:text-sm">
                     {stat.label}
                   </div>
                 </div>
@@ -122,7 +129,8 @@ export function Hero() {
               alt="Angel — Owner of Angel Mechanic Expert"
               width={520}
               height={680}
-              className="relative z-10 h-auto max-h-[75vh] w-auto drop-shadow-[0_0_40px_rgba(232,81,2,0.15)] mb-[-1px]"
+              sizes="(min-width: 1024px) 520px, (min-width: 768px) 380px, 280px"
+              className="relative z-10 mb-[-1px] h-auto max-h-[55vh] w-auto max-w-[280px] drop-shadow-[0_0_40px_rgba(232,81,2,0.15)] sm:max-h-[65vh] sm:max-w-[360px] md:max-w-none lg:max-h-[75vh]"
               priority
             />
           </div>

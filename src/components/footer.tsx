@@ -7,10 +7,10 @@ export function Footer() {
   const { locale, t } = useLanguage();
 
   return (
-    <footer className="bg-surface-dark">
+    <footer className="bg-surface-dark pb-24 sm:pb-0">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Main Footer */}
-        <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 py-12 sm:gap-12 sm:py-16 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="lg:col-span-1">
             <Image
@@ -18,9 +18,10 @@ export function Footer() {
               alt="Angel Mechanic Expert LLC"
               width={200}
               height={80}
-              className="h-16 w-auto"
+              sizes="200px"
+              className="h-14 w-auto sm:h-16"
             />
-            <p className="mt-4 text-sm leading-relaxed text-white/50">
+            <p className="mt-4 text-sm leading-relaxed text-white/70">
               {t.footer.description[locale]}
             </p>
 
@@ -66,7 +67,7 @@ export function Footer() {
                 <li key={service.title.en}>
                   <a
                     href="#services"
-                    className="text-sm text-white/50 transition-colors hover:text-white"
+                    className="text-sm text-white/70 transition-colors hover:text-white"
                   >
                     {service.title[locale]}
                   </a>
@@ -85,7 +86,7 @@ export function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-sm text-white/50 transition-colors hover:text-white"
+                    className="text-sm text-white/70 transition-colors hover:text-white"
                   >
                     {link.label[locale]}
                   </a>
@@ -100,7 +101,7 @@ export function Footer() {
               {t.footer.contactTitle[locale]}
             </h4>
             <ul className="mt-4 space-y-3">
-              <li className="text-sm text-white/50">
+              <li className="text-sm text-white/70">
                 3311 W Washington St
                 <br />
                 Orlando, FL 32805
@@ -108,7 +109,7 @@ export function Footer() {
               <li>
                 <a
                   href="tel:+14074509997"
-                  className="text-sm text-white/50 transition-colors hover:text-white"
+                  className="text-sm text-white/70 transition-colors hover:text-white"
                 >
                   (407) 450-9997
                 </a>
@@ -116,7 +117,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:info@angelmechanicexpert.com"
-                  className="text-sm text-white/50 transition-colors hover:text-white"
+                  className="text-sm text-white/70 transition-colors hover:text-white"
                 >
                   info@angelmechanicexpert.com
                 </a>
@@ -127,19 +128,19 @@ export function Footer() {
 
         {/* Bottom Footer */}
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-6 sm:flex-row">
-          <p className="text-xs text-white/40">
+          <p className="text-center text-xs text-white/60 sm:text-left">
             &copy; {new Date().getFullYear()} Angel Mechanic Expert LLC. {t.footer.copyright[locale]}
           </p>
           <div className="flex gap-6">
             <a
               href="#"
-              className="text-xs text-white/40 transition-colors hover:text-white/60"
+              className="text-xs text-white/60 transition-colors hover:text-white"
             >
               {t.footer.privacy[locale]}
             </a>
             <a
               href="#"
-              className="text-xs text-white/40 transition-colors hover:text-white/60"
+              className="text-xs text-white/60 transition-colors hover:text-white"
             >
               {t.footer.terms[locale]}
             </a>

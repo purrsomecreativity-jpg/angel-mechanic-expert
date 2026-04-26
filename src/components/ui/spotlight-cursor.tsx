@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useEffect, HTMLAttributes } from 'react';
+import { useRef, useEffect, useState, HTMLAttributes } from 'react';
 
 interface SpotlightConfig {
   radius?: number;
@@ -8,33 +8,38 @@ interface SpotlightConfig {
   smoothing?: number;
 }
 
-const useSpotlightEffect = (config: SpotlightConfig) => {
+const useSpotlightEffect = (config: SpotlightConfig, enabled: boolean) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    if (!enabled) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId: number;
+    let animationFrameId: number | null = null;
     let mouseX = -1000;
     let mouseY = -1000;
+    let needsRedraw = false;
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      needsRedraw = true;
     };
 
     const handleMouseMove = (event: MouseEvent) => {
       mouseX = event.clientX;
       mouseY = event.clientY;
+      needsRedraw = true;
     };
 
     const handleMouseLeave = () => {
       mouseX = -1000;
       mouseY = -1000;
+      needsRedraw = true;
     };
 
     const hexToRgb = (hex: string) => {
@@ -46,21 +51,23 @@ const useSpotlightEffect = (config: SpotlightConfig) => {
     };
 
     const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (needsRedraw) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (mouseX !== -1000 && mouseY !== -1000) {
-        const gradient = ctx.createRadialGradient(
-          mouseX, mouseY, 0,
-          mouseX, mouseY, config.radius || 200
-        );
-        const rgbColor = hexToRgb(config.color || '#ffffff');
-        gradient.addColorStop(0, `rgba(${rgbColor}, ${config.brightness || 0.15})`);
-        gradient.addColorStop(1, 'rgba(0,0,0,0)');
+        if (mouseX !== -1000 && mouseY !== -1000) {
+          const gradient = ctx.createRadialGradient(
+            mouseX, mouseY, 0,
+            mouseX, mouseY, config.radius || 200
+          );
+          const rgbColor = hexToRgb(config.color || '#ffffff');
+          gradient.addColorStop(0, `rgba(${rgbColor}, ${config.brightness || 0.15})`);
+          gradient.addColorStop(1, 'rgba(0,0,0,0)');
 
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        needsRedraw = false;
       }
-
       animationFrameId = requestAnimationFrame(draw);
     };
 
@@ -74,9 +81,9 @@ const useSpotlightEffect = (config: SpotlightConfig) => {
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId !== null) cancelAnimationFrame(animationFrameId);
     };
-  }, [config.radius, config.brightness, config.color]);
+  }, [config.radius, config.brightness, config.color, enabled]);
 
   return canvasRef;
 };
@@ -90,6 +97,16 @@ export function SpotlightCursor({
   className,
   ...rest
 }: SpotlightCursorProps) {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(pointer: fine)');
+    const update = () => setEnabled(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
   const spotlightConfig = {
     radius: 200,
     brightness: 0.15,
@@ -98,12 +115,14 @@ export function SpotlightCursor({
     ...config,
   };
 
-  const canvasRef = useSpotlightEffect(spotlightConfig);
+  const canvasRef = useSpotlightEffect(spotlightConfig, enabled);
+
+  if (!enabled) return null;
 
   return (
     <canvas
       ref={canvasRef}
-      className={`fixed top-0 left-0 pointer-events-none z-[9999] w-full h-full ${className}`}
+      className={`fixed top-0 left-0 pointer-events-none z-[9999] w-full h-full ${className ?? ''}`}
       {...rest}
     />
   );

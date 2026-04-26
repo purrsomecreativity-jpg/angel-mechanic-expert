@@ -1,20 +1,48 @@
 "use client";
 
 import Image from "next/image";
+import { useActionState, useEffect, useRef } from "react";
 import { useLanguage } from "@/lib/i18n";
+import {
+  sendContactEmail,
+  type ContactFormState,
+} from "@/app/actions/send-contact";
+
+const initialState: ContactFormState = { status: "idle" };
 
 export function CtaSection() {
   const { locale, t } = useLanguage();
+  const formRef = useRef<HTMLFormElement>(null);
+  const [state, formAction, isPending] = useActionState(
+    sendContactEmail,
+    initialState
+  );
+
+  useEffect(() => {
+    if (state.status === "success") {
+      formRef.current?.reset();
+    }
+  }, [state.status]);
+
+  const errorText =
+    state.status === "error"
+      ? state.message === "missing-fields"
+        ? t.contact.errorMissing[locale]
+        : state.message === "invalid-email"
+        ? t.contact.errorEmail[locale]
+        : t.contact.errorGeneric[locale]
+      : null;
 
   return (
-    <section id="contact" className="relative bg-muted/50 py-20 lg:py-28 overflow-hidden">
-      {/* Decorative watermark logo */}
-      <div className="absolute -right-10 -bottom-10 opacity-[0.04] pointer-events-none">
+    <section id="contact" className="relative bg-muted/50 py-16 sm:py-20 lg:py-28 overflow-hidden">
+      {/* Decorative watermark logo — hidden on mobile */}
+      <div className="absolute -right-10 -bottom-10 opacity-[0.04] pointer-events-none hidden lg:block">
         <Image
           src="/images/logos/ame-isotipo-orange.png"
           alt=""
           width={400}
           height={400}
+          sizes="400px"
           className="h-auto w-[400px]"
           aria-hidden="true"
         />
@@ -30,7 +58,7 @@ export function CtaSection() {
           </span>
         </div>
 
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Left: Info */}
           <div>
             <Image
@@ -38,13 +66,14 @@ export function CtaSection() {
               alt="Angel Mechanic Expert LLC"
               width={280}
               height={112}
-              className="mb-6 h-24 w-auto"
+              sizes="(min-width: 640px) 280px, 220px"
+              className="mb-4 h-16 w-auto sm:mb-6 sm:h-24"
             />
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl">
               {t.contact.heading1[locale]}{" "}
               <span className="text-brand">{t.contact.heading2[locale]}</span>
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <p className="mt-4 text-base text-muted-foreground sm:text-lg">
               {t.contact.subtitle[locale]}
             </p>
 
@@ -111,7 +140,7 @@ export function CtaSection() {
           </div>
 
           {/* Right: Contact Form */}
-          <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-8">
             <h3 className="text-lg font-bold text-foreground">
               {t.contact.formTitle[locale]}
             </h3>
@@ -119,7 +148,12 @@ export function CtaSection() {
               {t.contact.formSubtitle[locale]}
             </p>
 
-            <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form
+              ref={formRef}
+              action={formAction}
+              className="mt-6 space-y-4"
+            >
+              <input type="hidden" name="locale" value={locale} />
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label
@@ -131,8 +165,10 @@ export function CtaSection() {
                   <input
                     type="text"
                     id="name"
+                    name="name"
+                    required
                     placeholder={t.contact.namePlaceholder[locale]}
-                    className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+                    className="w-full rounded-lg border border-border bg-background px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 sm:py-2.5 sm:text-sm"
                   />
                 </div>
                 <div>
@@ -145,8 +181,9 @@ export function CtaSection() {
                   <input
                     type="tel"
                     id="phone"
+                    name="phone"
                     placeholder={t.contact.phonePlaceholder[locale]}
-                    className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+                    className="w-full rounded-lg border border-border bg-background px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 sm:py-2.5 sm:text-sm"
                   />
                 </div>
               </div>
@@ -161,6 +198,8 @@ export function CtaSection() {
                 <input
                   type="email"
                   id="email"
+                  name="email"
+                  required
                   placeholder="tu@email.com"
                   className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
                 />
@@ -175,6 +214,7 @@ export function CtaSection() {
                 </label>
                 <select
                   id="service"
+                  name="service"
                   className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
                   defaultValue=""
                 >
@@ -182,10 +222,38 @@ export function CtaSection() {
                     {t.contact.selectService[locale]}
                   </option>
                   {t.services.items.map((service) => (
-                    <option key={service.title.en}>{service.title[locale]}</option>
+                    <option key={service.title.en} value={service.title.en}>
+                      {service.title[locale]}
+                    </option>
                   ))}
-                  <option>{t.contact.other[locale]}</option>
+                  <option value="Other">{t.contact.other[locale]}</option>
                 </select>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="vin"
+                  className="mb-1.5 block text-sm font-medium text-foreground"
+                >
+                  {t.contact.vin[locale]}
+                </label>
+                <input
+                  type="text"
+                  id="vin"
+                  name="vin"
+                  inputMode="text"
+                  autoComplete="off"
+                  autoCapitalize="characters"
+                  spellCheck={false}
+                  maxLength={17}
+                  pattern="[A-HJ-NPR-Za-hj-npr-z0-9]{11,17}"
+                  placeholder={t.contact.vinPlaceholder[locale]}
+                  aria-describedby="vin-hint"
+                  className="w-full rounded-lg border border-border bg-background px-4 py-2.5 font-mono text-sm uppercase text-foreground placeholder:font-sans placeholder:normal-case placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+                />
+                <p id="vin-hint" className="mt-1.5 text-xs text-muted-foreground">
+                  {t.contact.vinHint[locale]}
+                </p>
               </div>
 
               <div>
@@ -197,7 +265,9 @@ export function CtaSection() {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
                   rows={4}
+                  required
                   placeholder={t.contact.messagePlaceholder[locale]}
                   className="w-full resize-none rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
                 />
@@ -205,10 +275,29 @@ export function CtaSection() {
 
               <button
                 type="submit"
-                className="w-full rounded-lg bg-brand px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand/25 transition-all hover:bg-brand-dark hover:shadow-brand/40"
+                disabled={isPending}
+                className="min-h-12 w-full rounded-lg bg-brand px-6 py-3 text-base font-semibold text-white shadow-lg shadow-brand/25 transition-all hover:bg-brand-dark hover:shadow-brand/40 disabled:cursor-not-allowed disabled:opacity-70 sm:text-sm"
               >
-                {t.contact.submit[locale]}
+                {isPending ? t.contact.sending[locale] : t.contact.submit[locale]}
               </button>
+
+              {state.status === "success" && (
+                <div
+                  role="status"
+                  className="rounded-lg border border-green-500/30 bg-green-500/10 px-4 py-3 text-sm font-medium text-green-700"
+                >
+                  {t.contact.success[locale]}
+                </div>
+              )}
+
+              {errorText && (
+                <div
+                  role="alert"
+                  className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
+                >
+                  {errorText}
+                </div>
+              )}
             </form>
           </div>
         </div>

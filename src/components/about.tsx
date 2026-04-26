@@ -22,14 +22,15 @@ export function About() {
   ];
 
   return (
-    <section id="about" className="relative bg-background py-20 lg:py-28 overflow-hidden">
-      {/* Decorative watermark logo */}
-      <div className="absolute -right-20 top-1/2 -translate-y-1/2 opacity-[0.04] pointer-events-none">
+    <section id="about" className="relative bg-background py-16 sm:py-20 lg:py-28 overflow-hidden">
+      {/* Decorative watermark logo — hidden on mobile, only decorative */}
+      <div className="absolute -right-20 top-1/2 -translate-y-1/2 opacity-[0.04] pointer-events-none hidden lg:block">
         <Image
           src="/images/logos/ame-compact-orange.png"
           alt=""
           width={500}
           height={500}
+          sizes="500px"
           className="h-auto w-[500px]"
           aria-hidden="true"
         />
@@ -45,22 +46,22 @@ export function About() {
           </span>
         </div>
 
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-start">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-start">
           {/* Left: Text */}
-          <div className="max-w-md">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+          <div className="lg:max-w-md">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
               {t.about.heading1[locale]}{" "}
               <span className="text-brand">{t.about.heading2[locale]}</span>
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
               {t.about.p1[locale]}
             </p>
-            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:mt-4 sm:text-lg">
               {t.about.p2[locale]}
             </p>
 
             {/* Features list */}
-            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4">
               {t.about.features.map((feature) => (
                 <div
                   key={feature.en}
@@ -72,6 +73,7 @@ export function About() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     strokeWidth={2}
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"
@@ -86,21 +88,23 @@ export function About() {
           </div>
 
           {/* Right: Photo + Stats Cards */}
-          <div className="relative mt-10">
-            <div className="flex justify-center mb-2 -mt-24 relative z-0">
+          <div className="relative">
+            {/* Photo of Angel & Luis */}
+            <div className="relative z-0 mb-2 flex justify-center lg:-mt-24">
               <Image
                 src="/images/luis-papa-photo.png"
                 alt="Angel & Luis — Angel Mechanic Expert"
                 width={420}
                 height={560}
-                className="h-auto w-[260px] xl:w-[300px] drop-shadow-[0_0_30px_rgba(232,81,2,0.1)]"
+                sizes="(min-width: 1280px) 300px, (min-width: 768px) 260px, 220px"
+                className="h-auto w-[200px] drop-shadow-[0_0_30px_rgba(232,81,2,0.1)] sm:w-[240px] md:w-[260px] xl:w-[300px]"
                 style={{
                   maskImage: "linear-gradient(to bottom, black 60%, transparent 85%)",
                   WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 85%)",
                 }}
               />
             </div>
-            <div className="relative z-10 grid grid-cols-2 gap-4 -mt-10">
+            <div className="relative z-10 -mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:-mt-10">
             {t.about.statsCards.map((stat, i) => (
               <div
                 key={stat.value}
@@ -109,7 +113,7 @@ export function About() {
                 <div className="mb-2 inline-flex rounded-lg bg-brand/10 p-2 text-brand transition-colors group-hover:bg-brand/15">
                   {statIcons[i]}
                 </div>
-                <div className="text-2xl font-bold text-foreground">
+                <div className="text-xl font-bold text-foreground sm:text-2xl">
                   {stat.value}
                 </div>
                 <div className="mt-1 text-sm font-semibold text-foreground">

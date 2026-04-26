@@ -48,7 +48,7 @@ const translations = {
       en: "We use state-of-the-art equipment and original quality parts to ensure your vehicle receives the best possible treatment. Your safety and satisfaction are our priority.",
     },
     features: [
-      { es: "Mecánicos Certificados ASE", en: "ASE Certified Mechanics" },
+      { es: "Más de 36 Años de Experiencia", en: "Over 36 Years of Experience" },
       { es: "Tecnología de Diagnóstico", en: "Diagnostic Technology" },
       { es: "Repuestos de Calidad", en: "Quality Parts" },
       { es: "Garantía por Escrito", en: "Written Warranty" },
@@ -212,12 +212,35 @@ const translations = {
     serviceRequired: { es: "Servicio Requerido", en: "Service Needed" },
     selectService: { es: "Selecciona un servicio", en: "Select a service" },
     other: { es: "Otro", en: "Other" },
+    vin: { es: "Número VIN (opcional)", en: "VIN Number (optional)" },
+    vinPlaceholder: { es: "Ej. 1HGBH41JXMN109186", en: "e.g. 1HGBH41JXMN109186" },
+    vinHint: {
+      es: "17 caracteres, ubicado en el tablero o marco de la puerta del conductor.",
+      en: "17 characters, found on the dashboard or driver door frame.",
+    },
     message: { es: "Mensaje", en: "Message" },
     messagePlaceholder: {
       es: "Describe el problema o servicio que necesitas...",
       en: "Describe the problem or service you need...",
     },
     submit: { es: "Enviar Mensaje", en: "Send Message" },
+    sending: { es: "Enviando...", en: "Sending..." },
+    success: {
+      es: "¡Mensaje enviado! Te contactaremos pronto.",
+      en: "Message sent! We'll be in touch soon.",
+    },
+    errorGeneric: {
+      es: "No se pudo enviar el mensaje. Intenta de nuevo o llámanos.",
+      en: "Couldn't send your message. Try again or give us a call.",
+    },
+    errorMissing: {
+      es: "Por favor completa nombre, email y mensaje.",
+      en: "Please fill in name, email, and message.",
+    },
+    errorEmail: {
+      es: "El email no es válido.",
+      en: "The email address is invalid.",
+    },
   },
 
   // Footer
