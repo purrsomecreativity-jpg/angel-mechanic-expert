@@ -116,6 +116,13 @@ const translations = {
         },
       },
       {
+        title: { es: "Reemplazo de Transmisión", en: "Transmission Replacement" },
+        description: {
+          es: "Reemplazo completo de transmisión con unidades de calidad y garantía. No realizamos reparaciones, solo reemplazos profesionales.",
+          en: "Complete transmission replacement with quality units and warranty. We don't do repairs — only professional replacements.",
+        },
+      },
+      {
         title: { es: "Sistema Eléctrico", en: "Electrical System" },
         description: {
           es: "Diagnóstico y reparación de alternadores, baterías, sistemas de encendido y cableado completo.",
@@ -198,8 +205,7 @@ const translations = {
     address: { es: "Dirección", en: "Address" },
     phone: { es: "Teléfono", en: "Phone" },
     schedule: { es: "Horario", en: "Hours" },
-    scheduleWeekday: { es: "Lunes a Viernes: 8:00 AM - 6:00 PM", en: "Monday to Friday: 8:00 AM - 6:00 PM" },
-    scheduleSaturday: { es: "Sábado: 8:00 AM - 2:00 PM", en: "Saturday: 8:00 AM - 2:00 PM" },
+    scheduleWeekday: { es: "Lunes a Sábado: 10:00 AM - 5:00 PM", en: "Monday to Saturday: 10:00 AM - 5:00 PM" },
     formTitle: { es: "Envíanos un Mensaje", en: "Send Us a Message" },
     formSubtitle: {
       es: "Completa el formulario y te contactaremos a la brevedad.",

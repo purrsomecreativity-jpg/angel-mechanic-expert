@@ -85,8 +85,8 @@ function buildCustomerEmail(opts: {
     : `If your situation is urgent, please call us at <a href="tel:+14074509997" style="color:#e85102;text-decoration:none;font-weight:600;">${BUSINESS_PHONE}</a>.`;
 
   const hours = isES
-    ? "Horario: Lunes a Viernes 8:00 AM – 6:00 PM · Sábado 8:00 AM – 2:00 PM"
-    : "Hours: Monday–Friday 8:00 AM – 6:00 PM · Saturday 8:00 AM – 2:00 PM";
+    ? "Horario: Lunes a Sábado 10:00 AM – 5:00 PM"
+    : "Hours: Monday–Saturday 10:00 AM – 5:00 PM";
 
   const closing = isES
     ? "Saludos,<br>Equipo Angel Mechanic Expert"

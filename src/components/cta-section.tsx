@@ -131,8 +131,6 @@ export function CtaSection() {
                   </div>
                   <div className="mt-1 text-sm text-muted-foreground">
                     {t.contact.scheduleWeekday[locale]}
-                    <br />
-                    {t.contact.scheduleSaturday[locale]}
                   </div>
                 </div>
               </div>
